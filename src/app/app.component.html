@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  </head>
+  <body>
+    <h1 style="display: flex;height: 150px;justify-content:center;align-items:center">INTERNATIONAL CURRENCY CONVERTER</h1>
+    <div style="display: flex;height: 150px;justify-content:center;align-items:center">
+      <div class="main-container">
+      <div class="selection-cont">
+        
+        
+        <span style="white-space:nowrap" *ngIf="isdisable"><span style="margin-right: 5px;">{{selectedCountry1.symbol}}</span> 
+          <input matInput type="text" style="border-style: none !important;" appearance="none" name="quantity" [(ngModel)]="quantity" >
+        </span>
+    
+        <span style="white-space:nowrap" *ngIf="!isdisable"><span style="margin-right: 5px;">{{selectedCountry1.symbol}}</span> 
+          <input matInput type="text" style="border-style: none !important;" appearance="none" name="quantity" (keyup)="convert()" [(ngModel)]="quantity" >
+        </span>
+    <!-- <select #c1 name="" id="country1"  (mouseleave)="changebase(c1.value);convert()">
+      <option value="INR">
+        <a href="#">
+          <img src=
+          "https://media.geeksforgeeks.org/wp-content/uploads/20200630132503/iflag.jpg"
+      
+  width="20" height="15">India Rupee</a></option>
+      
+  <option value="USD">US Dollar</option>
+  <option value="EUR">Euro</option>
+  <option value="AUD">Australian Dollar</option>
+  <option value="GBP">British Pound</option>
+  <option value="CAD">Canadian Dollar</option>
+  <option value="JYP">Japanese Yen</option>
+  <option value="NZD">New Zealand Dollar</option>
+  <option value="CHF">Swiss Franc</option>
+  <option value="ZAR">South African Rand</option>
+  <option value="RUB">Russian Ruble</option>
+  <option value="BGN">Bulgarian Lev</option>
+  <option value="SGD">Singapore Dollar</option>
+  <option value="HKD">Hong Kong Dollar</option>
+  <option value="SEK">Swedish Krona</option>
+  <option value="THB">Thai Baht</option>
+  <option value="HUF">Hungarian Forint</option>
+  <option value="CNY">Chinese Yuan Renminbi</option>
+  <option value="NOK">Norwegian Krone</option>
+  <option value="MXN">Mexican Peso</option>
+  <option value="DKK">Danish Krone</option>
+  <option value="MYR">Malaysian Ringgit</option>
+</select> -->
+<!-- <mat-form-field>
+  <mat-label>Select Country</mat-label>
+  <mat-select (mouseleave)="tocountry('from');convert()" [(ngModel)]="selectedCountry1">
+    <mat-option *ngFor="let con of country" [value]="con.value">
+      <img src='{{con.img}}' width="30" height="20"> {{con.viewValue}}
+    </mat-option>
+  </mat-select>
+</mat-form-field> -->
+<ng-container *ngIf="isdisable">
+  <mat-form-field>
+    <mat-label>Select Country</mat-label>
+    <mat-select (selectionChange)="tocountry('from')" [(ngModel)]="selectedCountry1">    <mat-select-trigger><img src='{{selectedCountry1.img}}' width="30" height="20"><span>{{selectedCountry1.viewValue}}</span></mat-select-trigger>
+      <mat-option *ngFor="let con of country" [value]="con">
+        <img src='{{con.img}}' width="30" height="20"> {{con.viewValue}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</ng-container>
+<ng-container *ngIf="!isdisable">
+  <mat-form-field>
+    <mat-label>Select Country</mat-label>
+    <mat-select (selectionChange)="tocountry('from');convert();($event)" [(ngModel)]="selectedCountry1">    <mat-select-trigger><img src='{{selectedCountry1.img}}' width="30" height="20"><span>{{selectedCountry1.viewValue}}</span></mat-select-trigger>
+      <mat-option *ngFor="let con of country" [value]="con">
+        <img src='{{con.img}}' width="30" height="20"> {{con.viewValue}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</ng-container>
+
+<!-- <p>to</p> -->
+<button class="button1" (click)="interchange()" type="button"> <img src="https://www.kindpng.com/picc/m/169-1694442_arrow-switch-two-arrows-hd-png-download.png"
+   height ="15" width="15" /></button>
+
+<!-- <select #c2 name="" id="country1" (mouseleave)="tocountry(c2.value);convert()">
+  <option value="USD">US Dollar</option>
+  <option value="INR">Indian Rupee</option>
+  <option value="EUR">Euro</option>
+  <option value="AUD">Australian Dollar</option>
+  <option value="GBP">British Pound</option>
+  <option value="CAD">Canadian Dollar</option>
+  <option value="JYP">Japanese Yen</option>
+  <option value="NZD">New Zealand Dollar</option>
+  <option value="CHF">Swiss Franc</option>
+  <option value="ZAR">South African Rand</option>
+  <option value="RUB">Russian Ruble</option>
+  <option value="BGN">Bulgarian Lev</option>
+  <option value="SGD">Singapore Dollar</option>
+  <option value="HKD">Hong Kong Dollar</option>
+  <option value="SEK">Swedish Krona</option>
+  <option value="THB">Thai Baht</option>
+  <option value="HUF">Hungarian Forint</option>
+  <option value="CNY">Chinese Yuan Renminbi</option>
+  <option value="NOK">Norwegian Krone</option>
+  <option value="MXN">Mexican Peso</option>
+  <option value="DKK">Danish Krone</option>
+  <option value="MYR">Malaysian Ringgit</option>
+</select> -->
+<!-- <mat-form-field>
+  <mat-label>Select Country</mat-label>
+  <mat-select (mouseleave)="tocountry('to');convert()" [(ngModel)]="selectedCountry2">
+    <mat-option *ngFor="let con of country" [value]="con.value">
+      <img src='{{con.img}}' width="30" height="20"> {{con.viewValue}}
+    </mat-option>
+  </mat-select>
+</mat-form-field> -->
+
+
+<ng-container *ngIf="isdisable">
+  <mat-form-field>
+    <mat-label>Select Country</mat-label>
+    <mat-select (selectionChange)="tocountry('to')" [(ngModel)]="selectedCountry2">
+      <!-- <mat-select (selectionChange)="tocountry('to');($event)"> ------ </mat-select> -->
+      <mat-select-trigger><img src='{{selectedCountry2.img}}' width="30" height="20"><span>{{selectedCountry2.viewValue}}</span></mat-select-trigger>
+      <mat-option *ngFor="let con of country" [value]="con">
+        <img src='{{con.img}}' width="30" height="20"> {{con.viewValue}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</ng-container>
+<ng-container *ngIf="!isdisable">
+  <mat-form-field>
+    <mat-label>Select Country</mat-label>
+    <mat-select (selectionChange)="tocountry('to');convert();($event)" [(ngModel)]="selectedCountry2">
+      <!-- <mat-select (selectionChange)="tocountry('to');($event)"> ------ </mat-select> -->
+      <mat-select-trigger><img src='{{selectedCountry2.img}}' width="30" height="20"><span>{{selectedCountry2.viewValue}}</span></mat-select-trigger>
+      <mat-option *ngFor="let con of country" [value]="con">
+        <img src='{{con.img}}' width="30" height="20"> {{con.viewValue}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</ng-container>
+
+  </div>
+  
+  <div class="result-container" *ngIf="!isdisable">
+<p class="from">{{quantity}} {{selectedCountry1.viewValue}}</p>
+<p class="p1">=</p><br>
+<p class="to">{{result}} {{selectedCountry2.viewValue}}</p>
+  </div>
+  <button class="button2" (click)="convert()" *ngIf="isdisable">Convert</button>
+</div>
+</div>
+</body>
+</html>
